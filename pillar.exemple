@@ -1,0 +1,66 @@
+
+
+# This is a configuration generator based on a few 
+# variables
+# For each group of containers, you can set 
+# an x_start and an x_number variable
+# these are used to generate x_number lxc containers 
+# with distinct names (see example below)
+# 
+
+# for testing
+
+# Creating: 
+# 10 debian wheezy lxc containers with static ip, with salt-minion 
+# 10 debian jessie lxc containers with dhcp   ip, with salt-minion
+# 1  ubuntu 10.04  lxc containers with static ip, with salt-master, and other packages... 
+lxc:
+  debian:
+    wheezy:
+      # names will range from wheezyminon-2 to wheezyminion-11
+      wheezyminion-%X%:
+        args:
+          x_start: 2
+          x_number: 10
+          # default : false
+          create: true
+        # Any occurence of "%X%" here gets replaced 
+        # by n in range(x_start,x_start+x_number)
+        network.name:         eth0
+        network.type:         veth
+        network.ipv4:         10.0.42.%X%/24
+        network.ipv4.gateway: 10.0.42.1
+        network.link:         br0
+        mount.entry:
+        start.auto:           true
+        pkgs:
+          - salt-minion
+      
+      wheezymaster:
+        ip: 10.0.42.11/24
+        pkgs:
+          - salt-master
+          - rsync
+          - vim
+          - tmux
+        
+    jessie:
+      jessieminion-%X%:
+        args:
+          x_start: 1
+          x_number: 10
+          create: true
+        ip: dhcp
+        pkgs:
+          - salt-minion
+  ubuntu:
+    trusty:
+      ubuntu-saltmaster:
+        args:
+          create: true
+        network.ipv4: 10.0.42.254/24
+        pkgs:
+          - salt-master
+          - rsync
+          - vim
+          - tmux

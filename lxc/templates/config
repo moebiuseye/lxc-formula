@@ -1,0 +1,8 @@
+
+lxc.name: {{name | replace('%X%',num) }}
+
+{%- for key,value in pillar['lxc'][type][ver][name].items() %}
+{%- if key != 'args' and key != 'pkgs' %}
+lxc.{{key}} = {{ value | replace('%X%',num) }}
+{%- endif  -%}
+{%- endfor -%}
