@@ -8,8 +8,6 @@
 # with distinct names (see example below)
 # 
 
-# for testing
-
 # Creating: 
 # 10 debian wheezy lxc containers with static ip, with salt-minion 
 # 10 debian jessie lxc containers with dhcp   ip, with salt-minion
@@ -33,6 +31,7 @@ lxc:
         network.link:         br0
         mount.entry:
         start.auto:           true
+        # TODO: implement pkgs
         pkgs:
           - salt-minion
       

@@ -1,15 +1,14 @@
 {%- macro create_and_config_n(name,type,ver,args={},num=None) %}
 {%- if args['create'] is defined and args['create'] == True %}
 {{ name  | replace('%X%', num) }}_create:
-  cmd.run:
-    - name: lxc-create -t {{type}} -n {{name | replace('%X%', num) }} -- -r {{ver}}
+cmd.run:
+  - name: lxc-create -t {{type}} -n {{name | replace('%X%', num) }} -- -r {{ver}}
 {%- endif  %}
 {{ name | replace('%X%', num) }}_config:
-  file.managed:
-    # {{pillar['lxc'][type][ver][name]}} {{name}}
-    - name: /var/lib/lxc/{{name | replace('%X%', num)}}/config
-    - source: salt://lxc/templates/config
-    - template: jinja
+file.managed:
+  - name: /var/lib/lxc/{{name | replace('%X%', num)}}/config
+  - source: salt://lxc/templates/config
+  - template: jinja
 {%- endmacro -%}
 
 {% macro create_and_config(name,type,ver,args={}) -%}
