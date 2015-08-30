@@ -16,17 +16,17 @@ lxc:
   debian:
     wheezy:
       # names will range from wheezyminon-2 to wheezyminion-11
-      wheezyminion-%X%:
+      wheezyminion-[X]:
         args:
           x_start: 2
           x_number: 10
           # default : false
           create: true
-        # Any occurence of "%X%" here gets replaced 
+        # Any occurence of "[X]" here gets replaced 
         # by n in range(x_start,x_start+x_number)
         network.name:         eth0
         network.type:         veth
-        network.ipv4:         10.0.42.%X%/24
+        network.ipv4:         10.0.42.[X]/24
         network.ipv4.gateway: 10.0.42.1
         network.link:         br0
         mount.entry:
@@ -44,7 +44,7 @@ lxc:
           - tmux
         
     jessie:
-      jessieminion-%X%:
+      jessieminion-[X]:
         args:
           x_start: 1
           x_number: 10
