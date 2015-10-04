@@ -1,6 +1,6 @@
 
-lxc.name = {{lxcname | replace('[X]',num) }}
 lxc.rootfs = /var/lib/lxc/{{lxcname | replace('[X]',num) }}/rootfs
+lxc.utsname = {{lxcname | replace('[X]',num) }}
 
 {#
 {{ type }}
@@ -12,7 +12,7 @@ lxc.rootfs = /var/lib/lxc/{{lxcname | replace('[X]',num) }}/rootfs
 --
 #}
 
-{% for key,value in pillar['lxc'][type][ver][lxcname].items() | sort %}
+{%- for key,value in pillar['lxc'][type][ver][lxcname].items() | sort %}
 {%- if key != 'args' and key != 'pkgs' %}
 lxc.{{key}} = {{ value | replace('[X]',num) }}
 {%- endif  -%}
