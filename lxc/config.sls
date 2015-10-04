@@ -10,7 +10,7 @@
     - type: {{type}}
     - ver: {{ver}}
     - lxcname: {{name}}
-    - name: /var/lib/lxc/{{name | replace('[X]', num)}}/config.salt
+    - name: /var/lib/lxc/{{name | replace('[X]', num)}}/config
     - source: salt://lxc/templates/config
     - template: jinja
 {%- endmacro -%}
